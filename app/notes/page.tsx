@@ -1,4 +1,3 @@
-import React from "react";
 import { QueryClient, dehydrate } from "@tanstack/query-core";
 import { HydrationBoundary } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
