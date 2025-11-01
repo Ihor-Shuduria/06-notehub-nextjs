@@ -1,3 +1,4 @@
+import Link from "next/link";
 import css from "./NoteList.module.css";
 import { deleteNote } from "../../lib/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -27,7 +28,7 @@ export default function NoteList({ notes, onDeleted }: NoteListProps) {
     await mutateAsync(id);
   }
 
-  if (!notes || notes.length === 0) return null;
+  if (!notes || notes.length === 0) return <p>No notes yet.</p>;
 
   return (
     <ul className={css.list}>
@@ -37,13 +38,19 @@ export default function NoteList({ notes, onDeleted }: NoteListProps) {
           <p className={css.content}>{n.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{n.tag}</span>
-            <button
-              className={css.button}
-              onClick={() => handleDelete(n.id)}
-              disabled={isPending}
-            >
-              {isPending ? "Deleting..." : "Delete"}
-            </button>
+            <div className={css.actions}>
+              <Link href={`/notes/${n.id}`} className={css.link}>
+                View details
+              </Link>
+
+              <button
+                className={css.button}
+                onClick={() => handleDelete(n.id)}
+                disabled={isPending}
+              >
+                {isPending ? "Deleting..." : "Delete"}
+              </button>
+            </div>
           </div>
         </li>
       ))}
